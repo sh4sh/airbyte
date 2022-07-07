@@ -4,10 +4,19 @@ connectionSpecification:
   title: Discogs Spec
   type: object
   required:
-    - TODO
+    - release
   additionalProperties: false
   properties:
     # 'TODO: This schema defines the configuration required for the source. This usually involves metadata such as database and/or authentication information.':
-    TODO:
+    release:
       type: string
-      description: describe me
+      description: The Release ID
+    curr_abbr:
+      type: string
+      examples:
+        - USD
+        - EUR
+      description: >-
+        Currency for marketplace data. Defaults to the authenticated users currency.
+        Must be one of the following: USD GBP EUR CAD AUD JPY CHF MXN BRL NZD SEK ZAR
+
