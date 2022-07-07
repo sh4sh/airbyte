@@ -192,17 +192,6 @@ class SourceDiscogs(AbstractSource):
         except requests.exceptions.RequestException as e:
             return False, e
 
-        """
-        TODO: Implement a connection check to validate that the user-provided config can be used to connect to the underlying API
-
-        See https://github.com/airbytehq/airbyte/blob/master/airbyte-integrations/connectors/source-stripe/source_stripe/source.py#L232
-        for an example.
-
-        :param config:  the user-input config object conforming to the connector's spec.yaml
-        :param logger:  logger object
-        :return Tuple[bool, any]: (True, None) if the input config can be used to connect to the API successfully, (False, error) otherwise.
-        """
-
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         """
         TODO: Replace the streams below with your own streams.
