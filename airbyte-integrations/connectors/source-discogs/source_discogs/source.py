@@ -56,7 +56,7 @@ class DiscogsStream(HttpStream, ABC):
     """
 
     # TODO: Fill in the url base. Required.
-    url_base = "https://example-api.com/v1/"
+    url_base = "https://api.discogs.com/"
 
     def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
         """
@@ -183,6 +183,15 @@ class Employees(IncrementalDiscogsStream):
 # Source
 class SourceDiscogs(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, any]:
+        logger.info("Checking Discogs API connection...")
+        try:
+            url = 'https://api.discogs.com/releases/249504'
+            headers = {'user-agent': 'AirbyteConnector/0.1 +https://airbyte.com'}
+            requests.get(url, headers=headers)
+            return True, None
+        except requests.exceptions.RequestException as e:
+            return False, e
+
         """
         TODO: Implement a connection check to validate that the user-provided config can be used to connect to the underlying API
 
@@ -193,7 +202,6 @@ class SourceDiscogs(AbstractSource):
         :param logger:  logger object
         :return Tuple[bool, any]: (True, None) if the input config can be used to connect to the API successfully, (False, error) otherwise.
         """
-        return True, None
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
         """
