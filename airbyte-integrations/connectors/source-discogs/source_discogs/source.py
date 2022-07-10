@@ -22,37 +22,35 @@ class DiscogsStream(HttpStream, ABC):
     primary_key = None
 
     def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        """
-        TODO: Override this method to define a pagination strategy. If you will not be using pagination, no action is required - just return None.
-
-        This method should return a Mapping (e.g: dict) containing whatever information required to make paginated requests. This dict is passed
-        to most other methods in this class to help you form headers, request bodies, query params, etc..
-
-        For example, if the API accepts a 'page' parameter to determine which page of the result to return, and a response from the API contains a
-        'page' number, then this method should probably return a dict {'page': response.json()['page'] + 1} to increment the page count by 1.
-        The request_params method should then read the input next_page_token and set the 'page' param to next_page_token['page'].
-
-        :param response: the most recent response from the API
-        :return If there is another page in the result, a mapping (e.g: dict) containing information needed to query the next page in the response.
-                If there are no more pages in the result, return None.
-        """
+        # Discogs default pagination is 50, max is 100
+        # response body contains pagination.page object with page count
         return None
 
     def request_params(
         self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, any] = None, next_page_token: Mapping[str, Any] = None
     ) -> MutableMapping[str, Any]:
-        """
-        TODO: Override this method to define any query parameters to be set. Remove this method if you don't need to define request params.
-        Usually contains common params e.g. pagination size etc.
-        """
+        # set per_page param here
         return {}
+    
+    def path(
+            self,
+            stream_state: Mapping[str, Any] = None,
+            stream_slice: Mapping[str, Any] = None,
+            next_page_token: Mapping[str, Any] = None
+    ) -> str:
+        return ""
 
-    def parse_response(self, response: requests.Response, **kwargs) -> Iterable[Mapping]:
-        """
-        TODO: Override this method to define how a response is parsed.
-        :return an iterable containing each record in the response
-        """
-        yield {}
+    def request_headers(self, **kwargs) -> Mapping[str, Any]:
+        # All requests need a User-Agent or Discogs will return 404
+        return {"User-Agent": "AirbyteConnector/0.1 +https://airbyte.com"}
+
+    def parse_response(
+            self,
+            response: requests.Response,
+            **kwargs
+    ) -> Iterable[Mapping]:
+        #        yield {}
+        return [response.json()]
 
 
 class Customers(DiscogsStream):
@@ -80,7 +78,7 @@ class SourceDiscogs(AbstractSource):
         try:
             url = "https://api.discogs.com/releases/" + config["release_id"]
             headers = {
-                # Discogs needs a User Agent on every request or it will return 404
+               # All requests need a User-Agent or Discogs will return 404
                 "User-Agent": "AirbyteConnector/0.1 +https://airbyte.com"}
             requests.get(url, headers=headers)
             return True, None
