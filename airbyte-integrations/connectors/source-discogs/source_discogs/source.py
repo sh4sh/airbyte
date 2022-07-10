@@ -24,14 +24,16 @@ class DiscogsStream(HttpStream, ABC):
     primary_key = None
 
     def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        return {'page': response.json()['pagination.page'] + 1}
+        return None
+#        return {'page': response.json()['page'] + 1}
 
     def request_params(
         self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, any] = None, next_page_token: Mapping[str, Any] = None
     ) -> MutableMapping[str, Any]:
         # Discogs default pagination is 50, max is 100
-        # Do I even need pagination if we're just looking up one release? hmm
-        return {"per_page": 10}
+        # Turns out we do not need pagination for the Release endpoint, however is needed in the future
+#        return {"per_page": 10}
+        return None
 
     def request_headers(self, **kwargs) -> Mapping[str, Any]:
         # All requests need a User-Agent or Discogs will return 404
