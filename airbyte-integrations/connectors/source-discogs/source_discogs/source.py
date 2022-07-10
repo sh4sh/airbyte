@@ -10,7 +10,9 @@ import requests
 from airbyte_cdk.sources import AbstractSource
 from airbyte_cdk.sources.streams import Stream
 from airbyte_cdk.sources.streams.http import HttpStream
-from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
+from airbyte_cdk.sources.streams.http.auth import NoAuth
+# Don't need authentication yet, but maybe later
+# from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 
 """
 TODO: Most comments in this class are instructive and should be deleted after the source is implemented.
@@ -182,22 +184,19 @@ class Employees(IncrementalDiscogsStream):
 
 # Source
 class SourceDiscogs(AbstractSource):
-    def check_connection(self, logger, config) -> Tuple[bool, any]:
+    def check_connection(self, logger, config) -> Tuple[bool, Any]:
         logger.info("Checking Discogs API connection...")
         try:
-            url = 'https://api.discogs.com/releases/249504'
-            headers = {'user-agent': 'AirbyteConnector/0.1 +https://airbyte.com'}
+            url = "https://api.discogs.com/releases/249504"
+            headers = {
+                # Discogs needs a User Agent on every request or it will return 404
+                "User-Agent": "AirbyteConnector/0.1 +https://airbyte.com"}
             requests.get(url, headers=headers)
             return True, None
         except requests.exceptions.RequestException as e:
             return False, e
 
     def streams(self, config: Mapping[str, Any]) -> List[Stream]:
-        """
-        TODO: Replace the streams below with your own streams.
-
-        :param config: A Mapping of the user input configuration as defined in the connector spec.
-        """
-        # TODO remove the authenticator if not required.
-        auth = TokenAuthenticator(token="api_key")  # Oauth2Authenticator is also available if you need oauth support
-        return [Customers(authenticator=auth), Employees(authenticator=auth)]
+        auth = NoAuth()
+#        return [Customers(authenticator=auth), Employees(authenticator=auth)]
+        return [Release(authenticator=auth, config=config)]
