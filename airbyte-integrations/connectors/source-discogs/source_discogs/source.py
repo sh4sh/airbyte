@@ -22,15 +22,14 @@ class DiscogsStream(HttpStream, ABC):
     primary_key = None
 
     def next_page_token(self, response: requests.Response) -> Optional[Mapping[str, Any]]:
-        # Discogs default pagination is 50, max is 100
-        # response body contains pagination.page object with page count
-        return None
+        return {'page': response.json()['pagination.page'] + 1}
 
     def request_params(
         self, stream_state: Mapping[str, Any], stream_slice: Mapping[str, any] = None, next_page_token: Mapping[str, Any] = None
     ) -> MutableMapping[str, Any]:
-        # set per_page param here
-        return {}
+        # Discogs default pagination is 50, max is 100
+        # Do I even need pagination if we're just looking up one release? hmm
+        return {"per_page": 10}
     
     def path(
             self,
@@ -53,22 +52,29 @@ class DiscogsStream(HttpStream, ABC):
         return [response.json()]
 
 
-class Customers(DiscogsStream):
-    """
-    TODO: Change class name to match the table/data source this stream corresponds to.
-    """
+class Release(DiscogsStream):
 
-    # TODO: Fill in the primary key. Required. This is usually a unique field in the stream, like an ID or a timestamp.
-    primary_key = "customer_id"
+    primary_key = "id"
+
+    def request_params(
+            self,
+            stream_state: Mapping[str, Any],
+            stream_slice: Mapping[str, Any] = None,
+            next_page_token: Mapping[str, Any] = None,
+    ) -> MutableMapping[str, Any]:
+        params = super().request_params(stream_state, stream_slice, next_page_token)
+        params["release_id"] = self.release_id
+        params["curr_abbr"] = self.curr_abbr
+        return params
 
     def path(
-        self, stream_state: Mapping[str, Any] = None, stream_slice: Mapping[str, Any] = None, next_page_token: Mapping[str, Any] = None
+            self,
+            stream_state: Mapping[str, Any] = None,
+            stream_slice: Mapping[str, Any] = None,
+            next_page_token: Mapping[str, Any] = None
     ) -> str:
-        """
-        TODO: Override this method to define the path this stream corresponds to. E.g. if the url is https://example-api.com/v1/customers then this
-        should return "customers". Required.
-        """
-        return "customers"
+        # /releases/{release_id}{?curr_abbr}
+        return "releases/" + self.release_id
 
 
 # Source
