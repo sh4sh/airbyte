@@ -15,6 +15,8 @@ from airbyte_cdk.sources.streams.http.auth import NoAuth
 # from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 
 # Basic full refresh stream
+
+
 class DiscogsStream(HttpStream, ABC):
 
     url_base = "https://api.discogs.com/"
@@ -30,14 +32,6 @@ class DiscogsStream(HttpStream, ABC):
         # Discogs default pagination is 50, max is 100
         # Do I even need pagination if we're just looking up one release? hmm
         return {"per_page": 10}
-    
-    def path(
-            self,
-            stream_state: Mapping[str, Any] = None,
-            stream_slice: Mapping[str, Any] = None,
-            next_page_token: Mapping[str, Any] = None
-    ) -> str:
-        return ""
 
     def request_headers(self, **kwargs) -> Mapping[str, Any]:
         # All requests need a User-Agent or Discogs will return 404
@@ -84,7 +78,7 @@ class SourceDiscogs(AbstractSource):
         try:
             url = "https://api.discogs.com/releases/" + config["release_id"]
             headers = {
-               # All requests need a User-Agent or Discogs will return 404
+                # All requests need a User-Agent or Discogs will return 404
                 "User-Agent": "AirbyteConnector/0.1 +https://airbyte.com"}
             requests.get(url, headers=headers)
             return True, None
