@@ -33,7 +33,7 @@ class DiscogsStream(HttpStream, ABC):
         # Discogs default pagination is 50, max is 100
         # Turns out we do not need pagination for the Release endpoint, however is needed in the future
 #        return {"per_page": 10}
-        return None
+        return {}
 
     def request_headers(self, **kwargs) -> Mapping[str, Any]:
         # All requests need a User-Agent or Discogs will return 404
