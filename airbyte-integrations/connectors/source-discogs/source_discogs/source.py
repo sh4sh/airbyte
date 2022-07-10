@@ -50,11 +50,10 @@ class Release(DiscogsStream):
 
     primary_key = "id"
 
-    def streams(self, config: Mapping[str, Any]) -> List[Stream]:
-        auth = NoAuth()
+    def __init__(self, config: Mapping[str, Any], **kwargs):
+        super().__init__()
         self.release_id = config['release_id']
         self.curr_abbr = config['curr_abbr']
-        return [Release(authenticator=auth, config=config)]
 
     def request_params(
             self,
