@@ -15,8 +15,6 @@ from airbyte_cdk.sources.streams.http.auth import NoAuth
 # from airbyte_cdk.sources.streams.http.auth import TokenAuthenticator
 
 # Basic full refresh stream
-
-
 class DiscogsStream(HttpStream, ABC):
 
     url_base = "https://api.discogs.com/"
@@ -32,7 +30,6 @@ class DiscogsStream(HttpStream, ABC):
     ) -> MutableMapping[str, Any]:
         # Discogs default pagination is 50, max is 100
         # Turns out we do not need pagination for the Release endpoint, however is needed in the future
-#        return {"per_page": 10}
         return {}
 
     def request_headers(self, **kwargs) -> Mapping[str, Any]:
