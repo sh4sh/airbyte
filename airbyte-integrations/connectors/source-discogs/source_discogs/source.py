@@ -187,7 +187,7 @@ class SourceDiscogs(AbstractSource):
     def check_connection(self, logger, config) -> Tuple[bool, Any]:
         logger.info("Checking Discogs API connection...")
         try:
-            url = "https://api.discogs.com/releases/249504"
+            url = "https://api.discogs.com/releases/" + config["release_id"]
             headers = {
                 # Discogs needs a User Agent on every request or it will return 404
                 "User-Agent": "AirbyteConnector/0.1 +https://airbyte.com"}
