@@ -1,0 +1,456 @@
+{
+    "streams": [
+        {
+            "stream": {
+                "name": "release",
+                "json_schema": {
+                    "$schema": "https://json-schema.org/draft/2019-09/schema",
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "integer"
+                        },
+                        "artists": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "anv": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "join": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "resource_url": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string"
+                                    },
+                                    "tracks": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "data_quality": {
+                                "type": "string"
+                            },
+                            "thumb": {
+                                "type": "string"
+                            },
+                            "community": {
+                                "type": "object",
+                                "properties": {
+                                    "contributors": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": [
+                                                "resource_url",
+                                                "username"
+                                            ],
+                                            "properties": {
+                                                "resource_url": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "data_quality": {
+                                        "type": "string"
+                                    },
+                                    "have": {
+                                        "type": "integer",
+                                        "default": 0
+                                    },
+                                    "rating": {
+                                        "type": "object",
+                                        "default": {},
+                                        "required": [
+                                            "average",
+                                            "count"
+                                        ],
+                                        "properties": {
+                                            "average": {
+                                                "type": "number",
+                                                "default": 0.0
+                                            },
+                                            "count": {
+                                                "type": "integer",
+                                                "default": 0
+                                            }
+                                        }
+                                    },
+                                    "status": {
+                                        "type": "string"
+                                    },
+                                    "submitter": {
+                                        "type": "object",
+                                        "default": {},
+                                        "required": [
+                                            "resource_url",
+                                            "username"
+                                        ],
+                                        "properties": {
+                                            "resource_url": {
+                                                "type": "string"
+                                            },
+                                            "username": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "want": {
+                                        "type": "integer",
+                                        "default": 0
+                                    }
+                                }
+                            },
+                            "companies": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "required": [
+                                        "catno",
+                                        "entity_type",
+                                        "entity_type_name",
+                                        "id",
+                                        "name",
+                                        "resource_url"
+                                    ],
+                                    "properties": {
+                                        "catno": {
+                                            "type": "string"
+                                        },
+                                        "entity_type": {
+                                            "type": "string"
+                                        },
+                                        "entity_type_name": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "resource_url": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "country": {
+                                "type": "string"
+                            },
+                            "date_added": {
+                                "type": "string"
+                            },
+                            "date_changed": {
+                                "type": "string"
+                            },
+                            "estimated_weight": {
+                                "type": "integer",
+                                "default": 0
+                            },
+                            "extraartists": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "required": [
+                                        "anv",
+                                        "id",
+                                        "join",
+                                        "name",
+                                        "resource_url",
+                                        "role",
+                                        "tracks"
+                                    ],
+                                    "properties": {
+                                        "anv": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "integer"
+                                        },
+                                        "join": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "resource_url": {
+                                            "type": "string"
+                                        },
+                                        "role": {
+                                            "type": "string"
+                                        },
+                                        "tracks": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "format_quantity": {
+                                "type": "integer",
+                                "default": 0
+                            },
+                            "formats": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "default": {},
+                                    "required": [
+                                        "descriptions",
+                                        "name",
+                                        "qty"
+                                    ],
+                                    "properties": {
+                                        "descriptions": {
+                                            "type": "array",
+                                            "default": [],
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "name": {
+                                            "type": "string",
+                                            "default": ""
+                                        },
+                                        "qty": {
+                                            "type": "string",
+                                            "default": ""
+                                        }
+                                    }
+                                }
+                            },
+                            "genres": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "identifiers": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "default": {},
+                                    "required": [
+                                        "type",
+                                        "value"
+                                    ],
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "images": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "required": [
+                                        "height",
+                                        "resource_url",
+                                        "type",
+                                        "uri",
+                                        "uri150",
+                                        "width"
+                                    ],
+                                    "properties": {
+                                        "height": {
+                                            "type": "integer"
+                                        },
+                                        "resource_url": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string"
+                                        },
+                                        "uri": {
+                                            "type": "string"
+                                        },
+                                        "uri150": {
+                                            "type": "string"
+                                        },
+                                        "width": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "object",
+                                    "required": [
+                                        "catno",
+                                        "entity_type",
+                                        "id",
+                                        "name",
+                                        "resource_url"
+                                    ],
+                                    "properties": {
+                                        "catno": {
+                                            "type": "string"
+                                        },
+                                        "entity_type": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "default": 0
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "resource_url": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "lowest_price": {
+                                "type": "number",
+                                "default": 0.0
+                            },
+                            "master_id": {
+                                "type": "integer",
+                                "default": 0
+                            },
+                            "master_url": {
+                                "type": "string"
+                            },
+                            "notes": {
+                                "type": "string"
+                            },
+                            "num_for_sale": {
+                                "type": "integer",
+                                "default": 0
+                            },
+                            "released": {
+                                "type": "string"
+                            },
+                            "released_formatted": {
+                                "type": "string"
+                            },
+                            "resource_url": {
+                                "type": "string"
+                            },
+                            "series": {
+                                "type": "array",
+                                "default": [],
+                                "items": {}
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "styles": {
+                                "type": "array",
+                                "default": [],
+                                "items": {
+                                    "type": "string"
+                                },
+                                "tracklist": {
+                                    "type": "array",
+                                    "default": [],
+                                    "items": {
+                                        "type": "object",
+                                        "required": [
+                                            "duration",
+                                            "position",
+                                            "title",
+                                            "type_"
+                                        ],
+                                        "properties": {
+                                            "duration": {
+                                                "type": "string"
+                                            },
+                                            "position": {
+                                                "type": "string"
+                                            },
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "type_": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "uri": {
+                                    "type": "string"
+                                },
+                                "videos": {
+                                    "type": "array",
+                                    "default": [],
+                                    "items": {
+                                        "type": "object",
+                                        "default": {},
+                                        "required": [
+                                            "description",
+                                            "duration",
+                                            "embed",
+                                            "title",
+                                            "uri"
+                                        ],
+                                        "properties": {
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "duration": {
+                                                "type": "integer"
+                                            },
+                                            "embed": {
+                                                "type": "boolean",
+                                                "default": false
+                                            },
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "uri": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "year": {
+                                    "type": "integer",
+                                    "default": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "supported_sync_modes": [
+                    "full_refresh"
+                ]
+            },
+            "sync_mode": "full_refresh",
+            "destination_sync_mode": "overwrite"
+        }
+    ]
+}
